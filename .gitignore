@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+.vscode/
+.ipynb_checkpoints/
+logs/
+
 # C extensions
 *.so
 
@@ -73,9 +77,6 @@ docs/_build/
 
 # PyBuilder
 target/
-
-# Jupyter Notebook
-.ipynb_checkpoints
 
 # IPython
 profile_default/
