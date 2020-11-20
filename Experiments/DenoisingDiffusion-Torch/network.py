@@ -13,9 +13,9 @@ diffusion = GaussianDiffusion(
 
 trainer = Trainer(
     diffusion,
-    './images',
+    'images/',
     image_size = 256,
-    train_batch_size = 2,
+    train_batch_size = 22,
     train_lr = 2e-5,
     train_num_steps = 700000,         # total training steps
     gradient_accumulate_every = 2,    # gradient accumulation steps

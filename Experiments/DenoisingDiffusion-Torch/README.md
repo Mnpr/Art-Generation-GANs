@@ -6,17 +6,6 @@ Implementation of <a href="https://arxiv.org/abs/2006.11239">Denoising Diffusion
 
 <img src="./sample.png" width="500px"><img>
 
-[![PyPI version](https://badge.fury.io/py/denoising-diffusion-pytorch.svg)](https://badge.fury.io/py/denoising-diffusion-pytorch)
-
-## Install
-
-```bash
-$ pip install denoising_diffusion_pytorch
-```
-
-## Usage
-
-```python
 
 ```
 
