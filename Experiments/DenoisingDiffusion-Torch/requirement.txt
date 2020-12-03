@@ -1,6 +1,0 @@
-einops
-numpy
-pillow
-torch
-torchvision
-tqdm
