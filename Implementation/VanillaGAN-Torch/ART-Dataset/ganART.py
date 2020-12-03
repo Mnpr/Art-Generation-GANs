@@ -15,7 +15,7 @@ from pathlib import Path
 latent_size = 256
 hidden_size = 64
 image_size = 49152
-num_epochs = 10
+num_epochs = 20
 batch_size = 4
 sample_dir = 'samples'
 save_dir = 'save'
