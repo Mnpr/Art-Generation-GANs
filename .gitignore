@@ -1,24 +1,23 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
-*$py.class
 
 # Configs, logs, and checkpoints
 .vscode/
 .ipynb_checkpoints/
 logs/
+logs_art/
+logs_mnits/
 
 # Data, references, reports, samples, checkpoints etc.
 Reference/
 Papers/
-Report/
+Experiments/
 data/
 samples/
 save/
 D.ckpt
 G.ckpt
-# Installer logs
-pip-log.txt
+
 
 # IPython
 profile_default/
