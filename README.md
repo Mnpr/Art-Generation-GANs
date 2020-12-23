@@ -1,12 +1,36 @@
-# Development Instruction MS-Project
+# Art Generation( Deep Generative models )
 
-## Gpu Server  Setup
+This Projectwork is series of Exploration and Experimentation with Deep Generative models to produce Realistic art Images.
 
-**Info :**
+## Datasets :
 
-- Arch Linux
+- Dimension $( 128 * 128 * 3 )$
 
-- Nvidia GPUS ( 2 * 12GB )
+- 9349 Art Samples
+
+## Implementation:
+
+- [FullyConnectedMLP-GAN]()
+
+- [DeepConvolutionalGAN]()
+
+- [ ] WGAN
+
+- [ ] StyleGAN
+
+- [ ] SAGAN
+
+- [ ] Denoising Diffusion  ...
+
+## Development Instructions
+
+- Remote GPU-Server
+
+- Local Setup
+
+- Dependencies
+
+### Remote GPU-Server setup
 
 **Login**
 
@@ -38,7 +62,7 @@ scp -r ~/mnpr_term/local sacharya@149.222.24.125:~/sacharya/server
 # new session
 tmux
 tmux new -s <session_name>
-tmux new -sg#add anTorch
+tmux new -sg #add ganTorch
 
 # list-session
 tmux list-sessions
@@ -60,6 +84,8 @@ tmux a -t ganTorch
 tmux switch -t [0]
 tmux kill-session -t [2]
 ```
+
+### Local Setup
 
 **Virtualenv-Python**
 
@@ -106,4 +132,64 @@ pip show <package_name>
 pip freeze > requirements.txt
 ```
 
-## Local Setup
+**Managing Environments/ Packages with `Conda`**
+
+```python
+# list
+conda list
+
+# search
+conda search <package>
+
+# install 
+conda install --yes <package1> <package2>
+
+# update packages
+conda update conda 
+
+# Info
+conda info --envs
+
+# Manage Python
+conda create --name aipy python=3.8
+
+# Activate
+conda activate aipy
+
+# Deactivate
+conda deactivate
+```
+
+### Dependencies
+
+- NumPy : *Numerical( Vectorized ) computation*
+
+- Matplotlib : *Visualization*
+
+- PyTorch : *Neural Network Models Implementation*
+
+- TensorBoard : *Logging and Observations*
+
+```python
+# Pytorch
+pip install torch torchvision
+# |OR|
+conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
+
+# Matplotlib
+pip install matplotlib
+# |OR|
+conda install -c conda-forge matplotlib
+
+# Numpy
+pip install numpy
+|OR|
+conda install numpy
+
+# Tensorboard
+pip install tensorboard
+# |OR|
+conda install -c conda-forge tensorboard
+```
+
+****
