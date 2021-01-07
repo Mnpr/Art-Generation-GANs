@@ -47,13 +47,14 @@ nvidia-smi
 **FIle transfer**
 
 ```shell
-# copy files from server
+
 scp -r <source> <destination>
-scp -r sacharya@149.222.24.125:~/sacharya/server ~/mnpr_term/local
+
+# Download files from server
+scp -r sacharya@149.222.24.125:~/Experiments/GANs ~/Documents/Experiments/GANs/
 
 # Upload files to server
-
-scp -r ~/mnpr_term/local sacharya@149.222.24.125:~/sacharya/server 
+scp -r ~/Documents/Experiments/GANs/ sacharya@149.222.24.125:~/Experiments/GANs/ 
 ```
 
 **Tmux**
