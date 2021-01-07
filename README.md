@@ -10,9 +10,9 @@ This Projectwork is series of Exploration and Experimentation with Deep Generati
 
 ## Implementation:
 
-- [FullyConnectedMLP-GAN]()
+- [x] [FullyConnectedMLP-GAN]()
 
-- [DeepConvolutionalGAN]()
+- [x] [DeepConvolutionalGAN]()
 
 - [ ] WGAN
 
