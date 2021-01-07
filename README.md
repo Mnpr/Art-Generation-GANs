@@ -10,11 +10,11 @@ This Projectwork is series of Exploration and Experimentation with Deep Generati
 
 ## Implementation:
 
-- [x] [FullyConnectedMLP-GAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/VanillaGAN-Torch)
+- [x] [FullyConnected-GAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/VanillaGAN-Torch)
 
 - [x] [DeepConvolutionalGAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/DCGAN-Torch)
 
-- [x] [WGAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/WGAN-Torch)
+- [x] [WassersteinGAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/WGAN-Torch)
 
 - [ ] StyleGAN
 
