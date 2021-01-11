@@ -12,15 +12,19 @@ This Projectwork is series of Exploration and Experimentation with Deep Generati
 
 - [x] [FullyConnected-GAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/VanillaGAN-Torch)
 
-- [x] [DeepConvolutionalGAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/DCGAN-Torch)
+- [x] [DeepConvolutional-GAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/DCGAN-Torch)
 
-- [x] [WassersteinGAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/WGAN-Torch)
+- [x] [Wasserstein-GAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/WGAN-Torch)
+  - [x] Weight Clipping
+  - [x] Gradient Penalty
 
-- [ ] StyleGAN
+- [ ] Conditional-GAN
 
-- [ ] SAGAN
+- [ ] Style-GAN
 
-- [ ] Denoising Diffusion  ...
+- [ ] SelfAttention-GAN
+
+
 
 ## Development Instructions
 
