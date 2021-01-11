@@ -4,9 +4,9 @@ This Projectwork is series of Exploration and Experimentation with Deep Generati
 
 ## Datasets :
 
-- Dimension $( 128 * 128 * 3 )$
+- Wikiart/landscape resized  $( 128 * 128 * 3 )$
 
-- 9349 Art Samples
+- No. of Samples : 9349
 
 ## Implementation:
 
@@ -15,6 +15,7 @@ This Projectwork is series of Exploration and Experimentation with Deep Generati
 - [x] [DeepConvolutional-GAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/DCGAN-Torch)
 
 - [x] [Wasserstein-GAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/WGAN-Torch)
+  
   - [x] Weight Clipping
   - [x] Gradient Penalty
 
@@ -23,8 +24,6 @@ This Projectwork is series of Exploration and Experimentation with Deep Generati
 - [ ] Style-GAN
 
 - [ ] SelfAttention-GAN
-
-
 
 ## Development Instructions
 
@@ -39,7 +38,7 @@ This Projectwork is series of Exploration and Experimentation with Deep Generati
 **Login**
 
 ```
-ssh sacharya@149.222.24.125
+ssh username@server_ip
 ```
 
 **Info ( GPU )**
@@ -51,14 +50,7 @@ nvidia-smi
 **FIle transfer**
 
 ```shell
-
 scp -r <source> <destination>
-
-# Download files from server
-scp -r sacharya@149.222.24.125:~/Experiments/GANs ~/Documents/Experiments/GANs/
-
-# Upload files to server
-scp -r ~/Documents/Experiments/GANs/ sacharya@149.222.24.125:~/Experiments/GANs/ 
 ```
 
 **Tmux**
@@ -102,9 +94,9 @@ source <directory-name>/bin/activate
 >>> import sys
 >>> sys.path
 [''
-, '/home/mnpr_term/miniconda3/lib/python38.zip'
-, '/home/mnpr_term/miniconda3/lib/python3.8'
-, '/home/mnpr_term/venvs/ai/lib/python3.8/site-packages']
+, '/home/username/miniconda3/lib/python38.zip'
+, '/home/username/miniconda3/lib/python3.8'
+, '/home/username/venvs/ai/lib/python3.8/site-packages']
 
 # run file
 python <file_name.py>
