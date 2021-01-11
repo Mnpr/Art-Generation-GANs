@@ -10,6 +10,7 @@ logs_mnits/
 
 # Data, references, reports, samples, checkpoints etc.
 Reference/
+Reports/
 Instruction.md
 Papers/
 Experiments/
