@@ -1,8 +1,8 @@
-This repository contains Master Projectwork :arrow_down: undertaken for the partial fulfillment of M.S. Information Engineering @Fachhochschule-Kiel under the supervision of  Prof. Dr. Hauke Schramm
+This repository contains Master Projectwork :arrow_down: undertaken for the partial fulfillment of M.S. in Information Engineering @Fachhochschule-Kiel under the supervision of  Prof. Dr. Hauke Schramm
 
-# Art Generation( Deep Generative models )
+# Exploration of Art Generation using Deep Generative models (GANs).
 
-Objective : Series of exploration and experimentation of Deep Generative Models on subset of WikiArt dataset to produce Realistic art Images.
+Objective : Series of progressive(GAN to SAGAN) exploration and experimentation of Deep Generative Models on subset of WikiArt dataset to produce Realistic art Images. 
 
 ## Datasets :
 
@@ -54,13 +54,13 @@ Objective : Series of exploration and experimentation of Deep Generative Models 
 
 ## Development Instructions
 
-- Dependencies
+1. Dependencies
 
-- Remote GPU-Server
+2. Remote GPU-Server
 
-- Local Setup
+3. Local Setup
 
-### Dependencies
+### 1. Dependencies
 
 - NumPy : *Numerical( Vectorized ) computation*
 
@@ -92,7 +92,7 @@ pip install tensorboard
 conda install -c conda-forge tensorboard
 ```
 
-### Remote GPU-Server setup
+### 2. Remote GPU-Server setup
 
 **Login**
 
@@ -141,7 +141,7 @@ tmux switch -t [0]
 tmux kill-session -t [2]
 ```
 
-### Local Setup
+### 3. Local Setup
 
 **Instructions :**
 
@@ -224,4 +224,4 @@ conda activate aipy
 conda deactivate
 ```
 
-### 
+***
