@@ -27,11 +27,43 @@ This Projectwork is series of Exploration and Experimentation with Deep Generati
 
 ## Development Instructions
 
+- Dependencies
+
 - Remote GPU-Server
 
 - Local Setup
 
-- Dependencies
+### Dependencies
+
+- NumPy : *Numerical( Vectorized ) computation*
+
+- Matplotlib : *Visualization*
+
+- PyTorch : *Neural Network Models Implementation*
+
+- TensorBoard : *Logging and Observations*
+
+```python
+# Pytorch
+pip install torch torchvision
+# |OR|
+conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
+
+# Matplotlib
+pip install matplotlib
+# |OR|
+conda install -c conda-forge matplotlib
+
+# Numpy
+pip install numpy
+|OR|
+conda install numpy
+
+# Tensorboard
+pip install tensorboard
+# |OR|
+conda install -c conda-forge tensorboard
+```
 
 ### Remote GPU-Server setup
 
@@ -83,6 +115,14 @@ tmux kill-session -t [2]
 ```
 
 ### Local Setup
+
+**Instructions :**
+
+- Changing the dataset directory and IMG_CHANNELS in `train.py`
+
+- Dataset residing in a recursive folder `e.g. data/1/<images-here>`
+
+- To train the model  : `python train.py`
 
 **Virtualenv-Python**
 
@@ -157,36 +197,4 @@ conda activate aipy
 conda deactivate
 ```
 
-### Dependencies
-
-- NumPy : *Numerical( Vectorized ) computation*
-
-- Matplotlib : *Visualization*
-
-- PyTorch : *Neural Network Models Implementation*
-
-- TensorBoard : *Logging and Observations*
-
-```python
-# Pytorch
-pip install torch torchvision
-# |OR|
-conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
-
-# Matplotlib
-pip install matplotlib
-# |OR|
-conda install -c conda-forge matplotlib
-
-# Numpy
-pip install numpy
-|OR|
-conda install numpy
-
-# Tensorboard
-pip install tensorboard
-# |OR|
-conda install -c conda-forge tensorboard
-```
-
-****
+### 
