@@ -1,10 +1,37 @@
+This repository contains Master Projectwork :arrow_down: undertaken for the partial fulfillment of M.S. Information Engineering @Fachhochschule-Kiel under the supervision of  Prof. Dr. Hauke Schramm
+
 # Art Generation( Deep Generative models )
 
-This Projectwork is series of Exploration and Experimentation with Deep Generative models to produce Realistic art Images.
+Objective : Series of exploration and experimentation of Deep Generative Models on subset of WikiArt dataset to produce Realistic art Images.
 
 ## Datasets :
 
-- Wikiart/landscape resized  $( 128 * 128 * 3 )$
+*Source* : [Wiki-Art : Visual Art Encyclopedia](https://www.wikiart.org/)
+
+- [Download Here @Kaggle :arrow_down:](https://www.kaggle.com/ipythonx/wikiart-gangogh-creating-art-gan/download)
+
+**Dataset Contents**
+
+```json
+'abstract': 14999,
+'animal-painting': 1798,
+'cityscape': 6598,
+'figurative': 4500,
+'flower-painting': 1800,
+'genre-painting': 14997,
+'landscape': 15000,
+'marina': 1800,
+'mythological-painting': 2099,
+'nude-painting-nu': 3000,
+'portrait': 14999,
+'religious-painting': 8400,
+'still-life': 2996,
+'symbolic-painting': 2999
+```
+
+**Resized Subset**
+
+- Wikiart/landscape resized ( 128 x 128 x 3 )
 
 - No. of Samples : 9349
 
