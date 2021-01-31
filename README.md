@@ -46,7 +46,9 @@ Objective : Series of progressive(GAN to SAGAN) exploration and experimentation 
   - [x] Weight Clipping
   - [x] Gradient Penalty
 
-- [ ] Conditional-GAN
+- [x] Conditional-GAN (MNIST)
+
+- [x] [Neural Style Transfer](https://github.com/Mnpr/Art-Generation-GANs/tree/main/Implementation/NeuralStyleTransfer)
 
 - [ ] Style-GAN
 
