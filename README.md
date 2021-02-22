@@ -50,11 +50,13 @@ Objective : Series of progressive(GAN to SAGAN) exploration and experimentation 
 
 - [x] [Neural Style Transfer](https://github.com/Mnpr/Art-Generation-GANs/tree/main/Implementation/NeuralStyleTransfer)
 
-- [ ] [Multi Collection Style Transfer] [ Gated-GAN ] 
+- [x] [Multi Collection Style Transfer] [ Gated-GAN ]
 
-- [ ] Style-GAN
+- [ ] Wikiart Classes ( Unconditional )
 
-- [ ] SelfAttention-GAN
+- [ ] Wikiart Classes ( Conditional )
+
+- [ ] Style-GAN | SelfAttention-GAN like GANs
 
 ## Development Instructions
 
