@@ -37,11 +37,11 @@ Objective : Series of progressive(GAN to SAGAN) exploration and experimentation 
 
 ## Implementation:
 
-- [x] [FullyConnected-GAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/VanillaGAN-Torch)
+- [x] [FullyConnected-GAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/VanillaGAN)
 
-- [x] [DeepConvolutional-GAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/DCGAN-Torch)
+- [x] [DeepConvolutional-GAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/DCGAN)
 
-- [x] [Wasserstein-GAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/WGAN-Torch)
+- [x] [Wasserstein-GAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/WGAN)
   
   - [x] Weight Clipping
   - [x] Gradient Penalty
@@ -50,11 +50,13 @@ Objective : Series of progressive(GAN to SAGAN) exploration and experimentation 
 
 - [x] [Neural Style Transfer](https://github.com/Mnpr/Art-Generation-GANs/tree/main/Implementation/NeuralStyleTransfer)
 
-- [ ] [Multi Collection Style Transfer] [ Gated-GAN ] 
+- [x] [Multi Collection Style Transfer( GatedGAN )](https://github.com/Mnpr/Art-Generation-GANs/tree/main/Implementation/GatedGAN)
 
-- [ ] Style-GAN
+- [ ] Wikiart Classes ( Unconditional )
 
-- [ ] SelfAttention-GAN
+- [ ] Wikiart Classes ( Conditional )
+
+- [ ] Style-GAN | SelfAttention-GAN like GANs
 
 ## Development Instructions
 
