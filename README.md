@@ -29,11 +29,9 @@ Objective : Series of progressive(GAN to SAGAN) exploration and experimentation 
 'symbolic-painting': 2999
 ```
 
-**Resized Subset**
+**Resized Subsets**
 
-- Wikiart/landscape resized ( 128 x 128 x 3 )
-
-- No. of Samples : 9349
+- `abstract`,`cityscape`, `landscape`,`portrait` ( no. of samples > 5000 )
 
 ## Implementation:
 
