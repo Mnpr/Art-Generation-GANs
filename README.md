@@ -2,7 +2,7 @@ This repository contains Master Projectwork :arrow_down: undertaken for the part
 
 # Exploration of Art Generation using Deep Generative models (GANs).
 
-Objective : Series of progressive(GAN to SAGAN) exploration and experimentation of Deep Generative Models on subset of WikiArt dataset to produce Realistic art Images. 
+Objective : Series of progressive exploration and experimentation of Deep Generative Models on subset of WikiArt dataset to produce Realistic art Images. 
 
 ## Datasets :
 
@@ -50,11 +50,15 @@ Objective : Series of progressive(GAN to SAGAN) exploration and experimentation 
 
 - [x] [Multi Collection Style Transfer( GatedGAN )](https://github.com/Mnpr/Art-Generation-GANs/tree/main/Implementation/GatedGAN)
 
-- [ ] Wikiart Classes ( Unconditional )
+- [x] Wikiart Classes ( Unconditional )
 
 - [ ] Wikiart Classes ( Conditional )
+  - [x] C_DCGAN [64 x 64 x 3]
+  - [ ] C_WGAN-GP [ ]
 
-- [ ] Style-GAN | SelfAttention-GAN like GANs
+- [ ] Refactor and Restructure
+- [ ] Final report Draft/Diagrams/Template
+- [ ] Clean Observations Networks
 
 ## Development Instructions
 
