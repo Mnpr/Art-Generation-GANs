@@ -52,9 +52,8 @@ Objective : Series of progressive exploration and experimentation of Deep Genera
 
 - [x] Wikiart Classes ( Unconditional )
 
-- [ ] Wikiart Classes ( Conditional )
-  - [x] C_DCGAN [64 x 64 x 3]
-  - [ ] C_WGAN-GP [ ]
+- [x] Wikiart Classes ( Conditional )
+  - [x] C_DCGAN
 
 - [ ] Refactor and Restructure
 - [ ] Final report Draft/Diagrams/Template
