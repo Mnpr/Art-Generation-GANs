@@ -1,101 +1,30 @@
-## Development Instructions
+# Development/Reproduction Instructions
 
-1. Dependencies
+****
 
-2. Remote GPU-Server
+
+1. Download
+
+2. Image Processing
 
 3. Local Setup
 
-### 1. Dependencies
+4. Remote Setup [ Optional ]
 
-- NumPy : *Numerical( Vectorized ) computation*
+5. Dependencies
 
-- Matplotlib : *Visualization*
+****
 
-- PyTorch : *Neural Network Models Implementation*
+## 1. Download
 
-- TensorBoard : *Logging and Observations*
+[Original Source](https://www.wikiart.org/)
+- [Download Here @Kaggle :arrow_down:](https://www.kaggle.com/ipythonx/wikiart-gangogh-creating-art-gan/download)
+- *⚠️ | Large file [ 34.6 GB ]*
 
-```python
-# Pytorch
-pip install torch torchvision
-# |OR|
-conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
 
-# Matplotlib
-pip install matplotlib
-# |OR|
-conda install -c conda-forge matplotlib
+## 2. Image Processing
 
-# Numpy
-pip install numpy
-|OR|
-conda install numpy
-
-# Tensorboard
-pip install tensorboard
-# |OR|
-conda install -c conda-forge tensorboard
-```
-
-### 2. Remote GPU-Server setup
-
-**Login**
-
-```
-ssh username@server_ip
-```
-
-**Info ( GPU )**
-
-```shell
-nvidia-smi 
-```
-
-**FIle transfer**
-
-```shell
-scp -r <source> <destination>
-```
-
-**Tmux**
-
-```shell
-# new session
-tmux
-tmux new -s <session_name>
-tmux new -sg #add ganTorch
-
-# list-session
-tmux list-sessions
-
-<ctrl><b>:
-    - c : create window
-    - % : split vertical
-    - p | n : switch previous << and next >> windows
-    - " : split horizontal
-    - b | o : switch between down | up respectively
-
-    - :<commands>
-    - :detach-client
-
-#attach session
-tmux a -t ganTorch
-
-# kill & switch sessions
-tmux switch -t [0]
-tmux kill-session -t [2]
-```
-
-### 3. Local Setup
-
-**Instructions :**
-
-- Changing the dataset directory and IMG_CHANNELS in `train.py`
-
-- Dataset residing in a recursive folder `e.g. data/1/<images-here>`
-
-- To train the model  : `python train.py`
+## 3. Local Setup
 
 **Virtualenv-Python**
 
@@ -169,3 +98,93 @@ conda activate aipy
 # Deactivate
 conda deactivate
 ```
+
+## 4. Remote Setup
+
+**Login**
+
+```
+ssh username@server_ip
+```
+
+**Info ( GPU )**
+
+```shell
+nvidia-smi 
+```
+
+**FIle transfer**
+
+```shell
+scp -r <source> <destination>
+
+```
+
+**Tmux** 
+
+```shell
+# new session
+tmux
+tmux new -s <session_name>
+tmux new -sg #add ganTorch
+
+# list-session
+tmux list-sessions
+
+# master key 
+    # - options    
+<ctrl><b> (+)
+    - c : create window
+    - % : split vertical
+    - p | n : switch previous << and next >> windows
+    - " : split horizontal
+    - b | o : switch between down | up respectively
+
+    - :<commands>
+    - e.g. <ctrl><b> :detach-client
+
+
+# attach previously detached session
+tmux a -t ganTorch
+
+# switch and/or kill sessions
+tmux switch -t [0]
+tmux kill-session -t [2]
+
+```
+
+## 5. Dependencies
+
+- NumPy : *Numerical( Vectorized ) computation*
+
+- Matplotlib : *Visualization*
+
+- PyTorch : *Neural Network Models Implementation*
+
+- TensorBoard : *Logging and Observations*
+
+**Install Dependencies**
+
+```python
+# Pytorch
+pip install torch torchvision
+# |OR|
+conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
+
+# Matplotlib
+pip install matplotlib
+# |OR|
+conda install -c conda-forge matplotlib
+
+# Numpy
+pip install numpy
+|OR|
+conda install numpy
+
+# Tensorboard
+pip install tensorboard
+# |OR|
+conda install -c conda-forge tensorboard
+```
+
+****
