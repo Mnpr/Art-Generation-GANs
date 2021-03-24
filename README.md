@@ -46,31 +46,46 @@ Objective : Series of progressive exploration and experimentation of Deep Genera
 
 ## :computer: Implementation:
 
-- [x] [FullyConnected-GAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/VanillaGAN)
+- [x] [Unconditional Generation](https://github.com/Mnpr/Art-Generation-GANs/tree/main/src/unconditional_generation)
 
-- [x] [DeepConvolutional-GAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/DCGAN)
-
-- [x] [Wasserstein-GAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/WGAN)
+  - [x] FullyConnected-GAN
+  - [x] DeepConvolutional-GAN
+  - [x] Wasserstein-GAN
   
-  - [x] Weight Clipping
-  - [x] Gradient Penalty
+    - [x] Weight Clipping
+    - [x] Gradient Penalty
 
-- [x] Conditional-GAN (MNIST)
+  - [x] MNIST Digits
+  - [x] CelebA Face
+  - [x] Wikiart  
 
-- [x] [Neural Style Transfer](https://github.com/Mnpr/Art-Generation-GANs/tree/main/Implementation/NeuralStyleTransfer)
+- [x] [Conditional Generation](https://github.com/Mnpr/Art-Generation-GANs/tree/main/src/conditional_generation/)
+  
+  - [x] Conditional-DCGAN
+  - [x] MNIST Digits 
+  - [x] Wikiart
 
-- [x] [Multi Collection Style Transfer( GatedGAN )](https://github.com/Mnpr/Art-Generation-GANs/tree/main/Implementation/GatedGAN)
+- [x] [Style Based Generation](https://github.com/Mnpr/Art-Generation-GANs/tree/main/src/style_based_generation)
 
-- [x] Wikiart Classes ( Unconditional )
+  - [x] Neural Style Transfer
+  - [x] Multi Collection Style Transfer( GatedGAN )
 
-- [x] Wikiart Classes ( Conditional )
-  - [x] C_DCGAN
+- [x] Report/Observations
 
-- [ ] Refactor and Restructure
-- [ ] Final report Draft/Diagrams/Template
-- [ ] Clean and Complete re-Observations
-
+  - [ ] Refactor and Restructure
+  - [ ] Final report Draft/Diagrams/Template
+  - [ ] Clean and Complete re-Observations
 
 ## :bookmark_tabs: References
+
+1. [Generative Adversarial Nets](https://papers.nips.cc/paper/2014/file/5ca3e9b122f61f8f06494c97b1afccf3-Paper.pdf)
+2. [Unsupervised Representation Learning with Deep Convolutional GANs ](https://arxiv.org/pdf/1511.06434.pdf)
+3. [Improved Techniques for Training GANs](https://papers.nips.cc/paper/2016/file/8a3363abe792db2d8761d6403605aeb7-Paper.pdf)
+4. [Wasserstein GAN]
+5. [Improved Training with WGAN-GP]
+6. [Gated GAN]
+7. [Style Transfer]
+8. [Conditional GAN]
+9. ...
 
 ***
