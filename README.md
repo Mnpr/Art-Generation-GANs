@@ -6,16 +6,6 @@ Objective : Series of progressive exploration and experimentation of Deep Genera
 
 ****
 
-## :beginner: Index
-
-:art: Datasets
-
-:computer: Implementation
-
-:bookmark_tabs: References
-
-****
-
 ## :art: Datasets
 
 *Source* : [Wiki-Art : Visual Art Encyclopedia](https://www.wikiart.org/)
