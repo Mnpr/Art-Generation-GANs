@@ -8,19 +8,18 @@ Objective : Series of progressive exploration and experimentation of Deep Genera
 
 ## :beginner: Index
 
-1. Datasets
+:art: Datasets
 
-2. Implementation
+:computer: Implementation
 
-3. References
+:bookmark_tabs: References
 
 ****
 
-## :art: 1. Datasets
+## :art: Datasets
 
 *Source* : [Wiki-Art : Visual Art Encyclopedia](https://www.wikiart.org/)
 
-- [Download Here @Kaggle :arrow_down:](https://www.kaggle.com/ipythonx/wikiart-gangogh-creating-art-gan/download)
 
 **Dataset Contents**
 
@@ -45,7 +44,7 @@ Objective : Series of progressive exploration and experimentation of Deep Genera
 
 - `abstract`,`cityscape`, `landscape`,`portrait` ( no. of samples > 5000 )
 
-## :computer: 2. Implementation:
+## :computer: Implementation:
 
 - [x] [FullyConnected-GAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/VanillaGAN)
 
