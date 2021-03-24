@@ -40,7 +40,7 @@ Objective : Series of progressive exploration and experimentation of Deep Genera
 'symbolic-painting': 2999
 ```
 
-**Resized Subsets**
+**Resized subsets for Conditional Generation**
 
 - `abstract`,`cityscape`, `landscape`,`portrait` ( no. of samples > 5000 )
 
@@ -68,9 +68,9 @@ Objective : Series of progressive exploration and experimentation of Deep Genera
 
 - [ ] Refactor and Restructure
 - [ ] Final report Draft/Diagrams/Template
-- [ ] Clean Observations Networks
+- [ ] Clean and Complete re-Observations
 
 
-## :bookmark_tabs: 3. References
+## :bookmark_tabs: References
 
 ***
