@@ -4,7 +4,19 @@ This repository contains Master Projectwork :arrow_down: undertaken for the part
 
 Objective : Series of progressive exploration and experimentation of Deep Generative Models on subset of WikiArt dataset to produce Realistic art Images. 
 
-## Datasets :
+****
+
+## :beginner: Index
+
+1. Datasets
+
+2. Implementation
+
+3. References
+
+****
+
+## :art: 1. Datasets
 
 *Source* : [Wiki-Art : Visual Art Encyclopedia](https://www.wikiart.org/)
 
@@ -33,7 +45,7 @@ Objective : Series of progressive exploration and experimentation of Deep Genera
 
 - `abstract`,`cityscape`, `landscape`,`portrait` ( no. of samples > 5000 )
 
-## Implementation:
+## :computer: 2. Implementation:
 
 - [x] [FullyConnected-GAN](https://github.com/Mnpr/MS-Project/tree/main/Implementation/VanillaGAN)
 
@@ -60,5 +72,6 @@ Objective : Series of progressive exploration and experimentation of Deep Genera
 - [ ] Clean Observations Networks
 
 
+## :bookmark_tabs: 3. References
 
 ***
