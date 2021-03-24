@@ -1,7 +1,6 @@
 # Development/Reproduction Instructions
 
-****
-
+### Contents
 
 1. Download
 
@@ -9,7 +8,7 @@
 
 3. Local Setup
 
-4. Remote Setup [ Optional ]
+4. Remote Setup
 
 5. Dependencies
 
@@ -54,17 +53,17 @@ deactivate
 pip list
 
 # search
-pip search <package>
+pip search <package name>
 
 # install
-pip install <package_name> # ==<version> (optional)
 pip install torch torchvision
+pip install <package_name> # ==<version> (optional)
 pip install requests==2.6.0
 
 # upgrade
 pip install --upgrade <pachage_name>
 
-# info
+# package info
 pip show <package_name>
 
 # generate requirements.txt
