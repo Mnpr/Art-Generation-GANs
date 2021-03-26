@@ -3,9 +3,6 @@ This repository contains Master Projectwork :arrow_down: undertaken for the part
 # Exploration of Art Generation using Deep Generative models (GANs).
 
 Objective : Series of progressive exploration and experimentation of Deep Generative Models on subset of WikiArt dataset to produce Realistic art Images. 
-
-****
-
 ## :art: Datasets
 
 *Source* : [Wiki-Art : Visual Art Encyclopedia](https://www.wikiart.org/)
@@ -60,7 +57,7 @@ Objective : Series of progressive exploration and experimentation of Deep Genera
   - [x] Neural Style Transfer
   - [x] Multi Collection Style Transfer( GatedGAN )
 
-- [x] Report/Observations
+- [ ] Report/Observations
 
   - [ ] Refactor and Restructure
   - [ ] Final report Draft/Diagrams/Template
@@ -78,4 +75,3 @@ Objective : Series of progressive exploration and experimentation of Deep Genera
 8. [Conditional GAN]
 9. ...
 
-***
