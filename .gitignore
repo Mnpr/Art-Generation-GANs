@@ -15,7 +15,7 @@ Instruction.md
 Papers/
 Experiments/
 Dataset/
-data/
+dataset/
 samples/
 save/
 D.ckpt
