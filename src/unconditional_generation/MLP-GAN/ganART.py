@@ -5,18 +5,22 @@ import torch.nn as nn
 from torchvision import transforms
 from torchvision.utils import save_image
 from torch.autograd import Variable
+from torchvision import datasets, transforms
 import matplotlib.pyplot as plt
 import pylab
 import numpy as np
+from pathlib import Path
 
 # Hyper-parameters
-latent_size = 64
-hidden_size = 256
-image_size = 784
-num_epochs = 300
-batch_size = 32
+latent_size = 256
+hidden_size = 64
+image_size = 49152
+num_epochs = 20
+batch_size = 4
 sample_dir = 'samples'
 save_dir = 'save'
+DATA_PATH = Path('../../../dataset/wikiart/')
+
 
 # Create a directory if not exists
 if not os.path.exists(sample_dir):
@@ -25,21 +29,13 @@ if not os.path.exists(sample_dir):
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
 
+transform = transforms.Compose([ transforms.ToTensor()
+                                , transforms.Normalize((0.5, 0.5, 0.5),(0.5, 0.5, 0.5)) 
+                            ])
 
 
-# MNIST dataset
-mnist = torchvision.datasets.MNIST(root='./data/',
-                                   train=True,
-                                   download=True,
-                                   transform = transforms.Compose([
-                                       transforms.ToTensor(),
-                                       transforms.Normalize([0.5], [0.5])
-                                    ]))
-
-# Data loader
-data_loader = torch.utils.data.DataLoader(dataset=mnist,
-                                          batch_size=batch_size, 
-                                          shuffle=True)
+dataset = datasets.ImageFolder(root=DATA_PATH, transform=transform)
+data_loader = torch.utils.data.DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True, num_workers=5)
 
 # Discriminator
 D = nn.Sequential(
@@ -149,11 +145,11 @@ for epoch in range(num_epochs):
     
     # Save real images
     if (epoch+1) == 1:
-        images = images.view(images.size(0), 1, 28, 28)
+        images = images.view(images.size(0), 3, 128, 128)
         save_image(denorm(images.data), os.path.join(sample_dir, 'real_images.png'))
     
     # Save sampled images
-    fake_images = fake_images.view(fake_images.size(0), 1, 28, 28)
+    fake_images = fake_images.view(fake_images.size(0), 3, 128, 128)
     save_image(denorm(fake_images.data), os.path.join(sample_dir, 'fake_images-{}.png'.format(epoch+1)))
     
     # Save and plot Statistics
