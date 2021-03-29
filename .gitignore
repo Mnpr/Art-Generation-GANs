@@ -8,7 +8,8 @@ logs/
 .ipynb_checkpoints/
 
 # Dataset
-dataset/
+dataset/photo2fourcollection/*
+dataset/wikiart/*
 
 # Model statistics
 gen_samples/
