@@ -2,33 +2,22 @@
 __pycache__/
 
 # Configs, logs, and checkpoints
+logs/
+
 .vscode/
 .ipynb_checkpoints/
-logs/
-logs_art/
-logs_mnits/
 
-# Data, references, reports, samples, checkpoints etc.
-Reference/
-Reports/
-Instruction.md
-Papers/
-Experiments/
-Dataset/
+# Dataset
 dataset/
-samples/
-save/
+
+# Model statistics
+gen_samples/
+statistics/
 D.ckpt
 G.ckpt
 
-
-# IPython
-profile_default/
-ipython_config.py
-
 # pyenv
 .python-version
-
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
 __pypackages__/
