@@ -10,6 +10,7 @@ logs/
 # Dataset
 dataset/photo2fourcollection/*
 dataset/wikiart/*
+dataset/celebA/*
 
 # Model statistics
 gen_samples/

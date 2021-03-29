@@ -10,10 +10,10 @@ class Generator(nn.Module):
             
             self._block(z_dim, hidden_dim),
             self._block(hidden_dim, hidden_dim * 2),
-            # self._block(hidden_dim * 2 , hidden_dim * 4),
+            self._block(hidden_dim * 2 , hidden_dim * 4),
             # self._block(hidden_dim * 4, hidden_dim * 8),
 
-            nn.Linear(hidden_dim * 2 , img_dim),
+            nn.Linear(hidden_dim * 4 , img_dim),
             
             # normalize inputs to [-1, 1] so make outputs [-1, 1]
             nn.Tanh()
@@ -39,9 +39,9 @@ class Discriminator(nn.Module):
 
         self.disc = nn.Sequential(
 
-            self._block( img_dim, hidden_dim * 2  ),
-            self._block( hidden_dim * 2 , hidden_dim ),
-            # self._block( hidden_dim * 2, hidden_dim ),
+            self._block( img_dim, hidden_dim * 4  ),
+            self._block( hidden_dim * 4 , hidden_dim * 2 ),
+            self._block( hidden_dim * 2, hidden_dim ),
 
             nn.Linear( hidden_dim, 1 ),
             nn.Sigmoid()
@@ -58,3 +58,8 @@ class Discriminator(nn.Module):
     # Forward Propagation
     def forward(self, x):
         return self.disc(x)
+
+def weights_init(model):
+    if type(model) == nn.Linear:
+        nn.init.xavier_uniform_(model.weight)
+        model.bias.data.fill_(0.01)
