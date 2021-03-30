@@ -1,11 +1,13 @@
+import os
 import torch
+import torchvision
 import torch.nn as nn
 from PIL import Image
 import torch.optim as optim
 import torchvision.models as models
 import torchvision.transforms as transforms
-from torchvision.utils import save_image 
 
+from custom_vgg import FeatureVGG19
 
 print('\n>>> Dependencies Loaded')
 torch.manual_seed(111)
@@ -28,75 +30,99 @@ if device == torch.device('cuda'):
 elif device == torch.device('cpu'):
     print('Device : CPU')
 
-# Import pretrained VGG 19 Network
-model = models.vgg19(pretrained=True).features
 
-# Customized VGG with selected features layers
-class VGG(nn.Module):
-    def __init__(self):
-        super(VGG, self).__init__()
+# Parameters
+# ----------------------------------------------------
+SAMPLES_DIR = 'samples'
 
-        # Select layer to choose features
-        self.chosen_features  = ['0','5','10','19','28']
-        self.model = models.vgg19(pretrained=True).features[:29]
+# Create if !exist
+if not os.path.exists(SAMPLES_DIR):
+    os.makedirs(SAMPLES_DIR)
 
-    def forward(self, x):
-        features = []
 
-        # Forward propagation with feature layers
-        for layer_num, layer in enumerate(self.model):
-            x = layer(x)
+# Optimization Steps
+OPTIM_STEPS = 500
+DISPLAY_STEPS = 200 # Steps to show generated image update
 
-            # add to layer if it is in chosen feature list
-            if str(layer_num) in self.chosen_features:
-                features.append(x)
+IMG_SHAPE = ( 3, 512, 512 )
 
-        return features
+LEARNING_RATE = 0.001
 
-# Load images style/ content
-def load_image(image_name):
-    image = Image.open(image_name)
-    image = loader(image).unsqueeze(0)
-    return image.to(device)
+ALPHA = 1
+BETA = 0.01
+print('>>> Parameters Defined ')
 
-device = torch.device('cuda' if torch.cuda.is_available else 'cpu')
-
-image_size = 400
-total_steps = 6000
-learning_rate = 0.001
-alpha = 1
-beta = 0.01
-original_img = load_image('frankfurt.jpg')
-style_img = load_image('graffiti.jpeg')
-
+# Image Transformations [ Resize and Convert2Tensor ]
+#------------------------------------------------------
 loader = transforms.Compose(
     [
-        transforms.Resize((image_size, 800))
+        transforms.Resize(( IMG_SHAPE[1], IMG_SHAPE[2]))
         , transforms.ToTensor()
     ]
 )
 
+# Load images style/ content to device
+#------------------------------------------------------
+def load_image(image_name, data_loader):
+
+    image = Image.open(image_name)
+    image = data_loader(image).unsqueeze(0)
+
+    return image.to(device)
 
 
-model = VGG().to(device).eval()
+# Style and Content Images
+CONTENT_IMG = load_image('content/hallstatt.jpg', loader)
+STYLE_IMG = load_image('style/thewowstyle.com.jpeg', loader)
 
+
+# Load Model
+# ----------------------------------------------------
+model = FeatureVGG19().to(device).eval()
+print('\n>>> Custom VGG-19 model Loaded ')
+
+# Generated Image [ Noise of Image Shape ]
+# ----------------------------------------------------
+generated = CONTENT_IMG.clone().requires_grad_(True)
 # generated = torch.randn(original_img.shape, device=device, requires_grad=True)\
-generated = original_img.clone().requires_grad_(True)
-# Parameters:
 
-optimizer = optim.Adam([generated], lr=learning_rate)
 
-for step in range(total_steps):
-    generated_features = model(generated)
-    original_img_features = model(original_img)
-    style_features = model(style_img)
+# Initialize Optimizer
+# ----------------------------------------------------
+optimizer = optim.Adam( [ generated ], lr=LEARNING_RATE )
+print('\n>>> Optimizers for model Initialized')
 
+arch_info = f"""
+----------------------------------------------------------------------
+
+Network Architecture :
+----------------------<< VGG-19 >>-------------------------------------
+{model}
+----------------------------------------------------------------------
+"""
+
+print(arch_info)
+
+# ----------------------------------------------------
+# Gradient Optimization
+# ----------------------------------------------------
+for step in range( OPTIM_STEPS ):
+
+    # Original Simantics, Style and Generated Features From model
+    generated_features = model( generated )
+    original_img_features = model( CONTENT_IMG )
+    style_features = model( STYLE_IMG )
+
+    # Initialize Style Loss
     style_loss = original_loss = 0
 
-
-    for gen_feat, orig_feat, style_feat in zip(generated_features, original_img_features, style_features ):
+    # Style Transfer
+    # ----------------------------------------------------
+    for gen_feat, orig_feat, style_feat in zip( generated_features, original_img_features, style_features ):
         
         batch_size, channel, height, width = gen_feat.shape
+
+        # Original Loss
         original_loss += torch.mean((gen_feat - orig_feat) **2 )
 
         # compute Gram matrix
@@ -108,14 +134,22 @@ for step in range(total_steps):
             style_feat.view(channel, height*width).t()
         )
 
+        # Style Loss
         style_loss += torch.mean((G-A)**2)
 
-    total_loss = alpha * original_loss + beta * style_loss
+    # Total Loss
+    total_loss = ALPHA * original_loss + BETA * style_loss
 
+    # Reset Optimizer
     optimizer.zero_grad()
     total_loss.backward()
     optimizer.step()
 
-    if step % 200 == 0:
+
+    if step % DISPLAY_STEPS == 0:
         print(total_loss)
-        save_image(generated, 'generated.png')
+
+        # Save image every display_step
+        torchvision.utils.save_image(generated, 'generated.png')
+
+print('\n--------------------<< Generation Completed >>----------------------------')
