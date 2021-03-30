@@ -44,7 +44,6 @@ STATS_DIR = 'statistics'
 
 DISPLAY_STEPS = 100 # Display/ Log  Steps
 
-IMG_DIM = 128 * 128 * 3 # 49152
 IMG_SHAPE = ( 3, 128, 128 )
 IMG_CHANNELS = IMG_SHAPE[0]
 
