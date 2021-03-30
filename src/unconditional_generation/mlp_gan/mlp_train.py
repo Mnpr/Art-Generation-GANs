@@ -41,7 +41,7 @@ DATASET_PATH = '../../../dataset/wikiart/abstract/'
 SAMPLES_DIR = 'gen_samples'
 STATS_DIR = 'statistics'
 
-DISPLAY_STEPS = 300 # Display/ Log  Steps
+DISPLAY_STEPS = 100 # Display/ Log  Steps
 
 IMG_DIM = 128 * 128 * 3 # 49152
 IMG_SHAPE = ( 3, 128, 128 )
@@ -56,8 +56,8 @@ BATCH_SIZE = 16
 NUM_EPOCHS = 10
 
 Z_DIM = 100
-FEATURES_GEN = 100
-FEATURES_DISC = 100
+FEATURES_GEN = 64
+FEATURES_DISC = 64
 
 print('>>> Parameters Defined ')
 
@@ -157,9 +157,9 @@ for epoch in range( NUM_EPOCHS ):
         noise = torch.randn( BATCH_SIZE, Z_DIM ).to(device)
         
         fake = gen(noise)
-        real = real.view(-1, IMG_DIM).to(device) # Flatten real mini_batch
+        real = real.view(-1, IMG_DIM).to(device) # Flatten 
 
-        ### Train Discriminator: max log(D(x)) + log(1 - D(G(z)))
+        # Train Discriminator: max log(D(x)) + log(1 - D(G(z)))
         # ----------------------------------------------------
         disc_real = disc(real).view(-1) # flatten
         disc_loss_real = criterion(disc_real, torch.ones_like(disc_real))
@@ -187,6 +187,9 @@ for epoch in range( NUM_EPOCHS ):
         output = disc(fake).view(-1)
         gen_loss = criterion(output, torch.ones_like(output))
 
+        # keep track of generator loss
+        generator_losses += [gen_loss.item()]
+
         # Reset Gradients
         gen.zero_grad()
 
@@ -194,8 +197,6 @@ for epoch in range( NUM_EPOCHS ):
         gen_loss.backward()
         opt_gen.step()
 
-        # keep track of generator loss
-        generator_losses += [gen_loss.item()]
 
         # Logging, saving loss function and Images
         if step % DISPLAY_STEPS == 0 and step > 0:
