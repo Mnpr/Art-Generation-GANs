@@ -72,8 +72,8 @@ def load_image(image_name, data_loader):
 
 
 # Style and Content Images
-CONTENT_IMG = load_image('content/hallstatt.jpg', loader)
-STYLE_IMG = load_image('style/thewowstyle.com.jpeg', loader)
+CONTENT_IMG = load_image('content/unknown.jpg', loader)
+STYLE_IMG = load_image('style/style.jpeg', loader)
 
 
 # Load Model
