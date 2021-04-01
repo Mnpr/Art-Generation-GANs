@@ -9,15 +9,10 @@ from PIL import Image
 
 
 class ImageDataset(Dataset):
-    def __init__(self, root, transforms_=None, mode='train'):
-        transforms_ = [ transforms.Resize(int(143), Image.BICUBIC), 
-                transforms.RandomCrop(128), 
-                transforms.RandomHorizontalFlip(),
-                transforms.ToTensor(),
-                transforms.Normalize((0.5,0.5,0.5), (0.5,0.5,0.5)) 
-              ]
+    def __init__(self, root, transform_, mode='train'):
+        
         #content source
-        self.transform = transforms.Compose(transforms_)
+        self.transform = transform_
         self.X = sorted(glob.glob(os.path.join(root, f'{mode}Content', '*')))
         
         #style image source(s)
@@ -51,6 +46,7 @@ class ImageDataset(Dataset):
 
 class ReplayBuffer():
     def __init__(self, max_size=50):
+        
         assert (max_size > 0), 'Empty buffer or trying to create a black hole. Be careful.'
         self.max_size = max_size
         self.data = []
@@ -69,4 +65,5 @@ class ReplayBuffer():
                     self.data[i] = element
                 else:
                     to_return.append(element)
+
         return Variable(torch.cat(to_return))
