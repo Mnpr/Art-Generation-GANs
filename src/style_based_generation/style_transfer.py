@@ -41,7 +41,7 @@ if not os.path.exists(SAMPLES_DIR):
 
 
 # Optimization Steps
-OPTIM_STEPS = 500
+OPTIM_STEPS = 5000
 DISPLAY_STEPS = 200 # Steps to show generated image update
 
 IMG_SHAPE = ( 3, 512, 512 )
