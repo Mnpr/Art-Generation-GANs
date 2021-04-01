@@ -12,8 +12,11 @@ dataset/photo2fourcollection/*
 dataset/wikiart/*
 dataset/celebA/*
 
-# Model statistics
+# Model statistics and samples
 gen_samples/
+samples/
+content/
+style/
 statistics/
 D.ckpt
 G.ckpt
