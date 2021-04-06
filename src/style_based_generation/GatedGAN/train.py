@@ -11,46 +11,96 @@ from torch.utils.data import DataLoader, Dataset
 import torchvision.transforms as transforms
 from PIL import Image
 import numpy as np
-import visdom
+# import visdom
 
-
-from data import *
-from models import *
 from utils import *
+from data import ImageDataset, ReplayBuffer
+from models import Generator \
+                   , Discriminator \
+                   , Identity \
+                   , ResidualBlock \
+                   , Encoder \
+                   , Transformer \
+                   , Decoder \
+                   , TVLoss \
+                   , weights_init_normal
+
+print('\n>>> Dependencies Loaded')
+torch.manual_seed(111)
+
+# Device Info : 
+#-------------------------------------------------------------------
+print('\n------------------------<< Device Info >>--------------------------------')
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+cuda_info = f"""
+Device     : GPU {torch.cuda.device(device)}
+Properties :
+{torch.cuda.get_device_properties(device)}
+----------------------------------------------------------------------
+"""
+
+if device == torch.device('cuda'):
+    print(cuda_info)
+elif device == torch.device('cpu'):
+    print('Device : CPU')
 
 # ---------------------------------------------------------------------------------
 # Train Parameters [Gated-GAN]
 # ---------------------------------------------------------------------------------
 
-epoch = 0
-n_epochs = 100
-decay_epoch=50
-batchSize = 1
-dataroot = './photo2fourcollection'
+DATASET_PATH = '../../../dataset//photo2fourcollection/'
+
+NUM_EPOCHS = 100
+DECAY_EPOCHS=50
+BATCH_SIZE = 1
+
 loadSize = 143
 fineSize = 128
-ngf = 64
-ndf = 64    
-in_nc = 3 
-out_nc = 3 
-lr = 0.0002 
+
+FEATURES_GEN = 64
+FEATURES_DISC = 64  
+
+INPUT_CHANNELS = 3 
+OUTPUT_CHANNELS = 3 
+
+LEARNING_RATE= 0.0002 
+BETA_ADAM = ( 0.5, 0.999 )
+LAMBDA_A = 10.0
+TV_STRENGTH=1e-6
+AE_CONSTRAIN = 10 
+NUM_STYLES = 4
+
+epoch = 0
 gpu = 1
-lambda_A = 10.0
 pool_size = 50
 resize_or_crop = 'resize_and_crop'
-autoencoder_constrain = 10 
-n_styles = 4
 cuda=True
-tv_strength=1e-6
+
+print('>>> Parameters Defined ')
+
+# Image Transformations [ Resize, Convert2Tensor, and Normalzie ]
+#-------------------------------------------------------------------
+transform = transforms.Compose(
+    [
+        transforms.Resize(int(143), Image.BICUBIC),
+        transforms.RandomCrop(128),
+        transforms.RandomHorizontalFlip(),
+        transforms.ToTensor(),
+        transforms.Normalize((0.5,0.5,0.5), (0.5,0.5,0.5))
+    ]
+)
 
 # ---------------------------------------------------------------------------------
 # Dataloader
-dataloader = DataLoader( ImageDataset('./photo2fourcollection')
-                        ,  batch_size=1
-                        , shuffle=True
-                        , num_workers=1 )
+dataloader = DataLoader( ImageDataset( DATASET_PATH, transform_=transform )
+                       , batch_size=1
+                       , shuffle=True
+                       , num_workers=1 )
                         
 batch = next(iter(dataloader))
+print('\n>>> Data Loader with Transformation is Ready')
 
 # Batch Information
 batch_info = f""" 
@@ -67,15 +117,15 @@ St_Label Shape : \n{batch['style_label'].shape}
 """
 print(batch_info)
 
-# ---------------------------------------------------------------------------------
-# Init G, D
-generator = Generator(in_nc, out_nc, n_styles, ngf)
-discriminator= Discriminator(in_nc, n_styles, ndf)
-print('-> Discriminator and Generator  Initialized [x]\n')
+# Initialize Generator, Discriminator, and Optimizers
+#-------------------------------------------------------------------
+generator = Generator(INPUT_CHANNELS, OUTPUT_CHANNELS, NUM_STYLES, FEATURES_GEN)
+discriminator= Discriminator(INPUT_CHANNELS, NUM_STYLES, FEATURES_DISC)
+print('\n>>> Network [D]isciminator & [G]enerator Initialized')
 
 # Load previous params.
-generator.load_state_dict(torch.load('./netG5.pth'))
-print('-> Dictionary State Loaded [x]\n')
+# generator.load_state_dict(torch.load('./netG5.pth'))
+# print('-> Dictionary State Loaded [x]\n')
 
 
 if cuda:
@@ -94,64 +144,77 @@ else:
     
 criterion_ACGAN = nn.CrossEntropyLoss()
 criterion_Rec = nn.L1Loss()
-criterion_TV = TVLoss(TVLoss_weight=tv_strength)
+criterion_TV = TVLoss(TVLoss_weight=TV_STRENGTH)
 
 # ---------------------------------------------------------------------------------
 # Optimization and Learning Rate Schedulers
 #Optimizers & LR schedulers
 optimizer_G = torch.optim.Adam(generator.parameters(),
-                                lr=lr, betas=(0.5, 0.999))
+                                lr= LEARNING_RATE, betas = BETA_ADAM )
 optimizer_D = torch.optim.Adam(discriminator.parameters(), 
-                               lr=lr, betas=(0.5, 0.999))
-
+                               lr=LEARNING_RATE, betas = BETA_ADAM )
+print('\n>>> Optimizers for [D] & [G] Initialized')
 
 lr_scheduler_G = torch.optim.lr_scheduler.LambdaLR(optimizer_G
-                                                   , lr_lambda=LambdaLR(n_epochs
+                                                   , lr_lambda=LambdaLR(NUM_EPOCHS
                                                                         , epoch
-                                                                        , decay_epoch).step)
+                                                                        , DECAY_EPOCHS).step)
 lr_scheduler_D = torch.optim.lr_scheduler.LambdaLR(optimizer_D
-                                                   , lr_lambda=LambdaLR(n_epochs
+                                                   , lr_lambda=LambdaLR(NUM_EPOCHS
                                                                         ,epoch
-                                                                        , decay_epoch).step)
-print('-> Optimizer and LR Scheduler initialized [x]\n')
+                                                                        , DECAY_EPOCHS).step)
+print('\n>>> LR Scheduler initialized')
 
-# ---------------------------------------------------------------------------------
 #Set vars for training
+# ---------------------------------------------------------------------------------
+
 Tensor = torch.cuda.FloatTensor if cuda else torch.Tensor
 
-input_A = Tensor(batchSize, in_nc, fineSize, fineSize)
-input_B = Tensor(batchSize, out_nc, fineSize, fineSize)
+input_A = Tensor(BATCH_SIZE, INPUT_CHANNELS, fineSize, fineSize)
+input_B = Tensor(BATCH_SIZE, OUTPUT_CHANNELS, fineSize, fineSize)
 
-target_real = Variable(Tensor(batchSize).fill_(1.0), requires_grad=False)
-target_fake = Variable(Tensor(batchSize).fill_(0.0), requires_grad=False)
+target_real = Variable(Tensor(BATCH_SIZE).fill_(1.0), requires_grad=False)
+target_fake = Variable(Tensor(BATCH_SIZE).fill_(0.0), requires_grad=False)
 
 D_A_size = discriminator(input_A.copy_(batch['style']))[0].size()  
 D_AC_size = discriminator(input_B.copy_(batch['style']))[1].size()
 
 class_label_B = Tensor(D_AC_size[0],D_AC_size[1],D_AC_size[2]).long()
 
-autoflag_OHE = Tensor(1,n_styles+1).fill_(0).long()
+autoflag_OHE = Tensor(1,NUM_STYLES+1).fill_(0).long()
 autoflag_OHE[0][-1] = 1
 
 fake_label = Tensor(D_A_size).fill_(0.0)
 real_label = Tensor(D_A_size).fill_(0.99) 
 
-rec_A_AE = Tensor(batchSize,in_nc,fineSize,fineSize)
+rec_A_AE = Tensor(BATCH_SIZE,INPUT_CHANNELS,fineSize,fineSize)
 
 fake_buffer = ReplayBuffer()
 
+# Initialize weights
 # ---------------------------------------------------------------------------------
-##Init Weights
 generator.apply(weights_init_normal)
 discriminator.apply(weights_init_normal)
+print('\n>>> Network weights initialized ')
 
-print('-> Dictionary State Loaded [x]\n')
+
+arch_info = f"""
+-------------------------------------------------------------------
+Network Architectures :
+--------------------<< Generator >>--------------------------------
+{generator}
+--------------------<< Discriminator >>----------------------------
+{discriminator}
+"""
+
+print(arch_info)
 
 # ---------------------------------------------------------------------------------
 # TRAIN LOOP
 # ---------------------------------------------------------------------------------
 
-for epoch in range(epoch,n_epochs):
+for epoch in range(epoch,NUM_EPOCHS):
+    
     for i, batch in enumerate(dataloader):
         ## Unpack minibatch
         
@@ -161,7 +224,7 @@ for epoch in range(epoch,n_epochs):
         style_label = batch['style_label']
         
         # one-hot encoded style
-        style_OHE = F.one_hot(style_label,n_styles).long()
+        style_OHE = F.one_hot(style_label,NUM_STYLES).long()
         
         # style Label mapped over 1x19x19 tensor for patch discriminator 
         class_label = class_label_B.copy_(label2tensor(style_label,class_label_B)).long()
@@ -195,7 +258,7 @@ for epoch in range(epoch,n_epochs):
         out_gan, out_class = discriminator(real_style)
         
         # Discriminator Style Classification loss
-        errD_real_class = criterion_ACGAN(out_class.transpose(1,3),class_label)*lambda_A
+        errD_real_class = criterion_ACGAN(out_class.transpose(1,3),class_label)*LAMBDA_A
         
         # Discriminator Real loss (correctly identify real style images)
         errD_real = criterion_GAN(out_gan, real_label)        
@@ -224,7 +287,7 @@ for epoch in range(epoch,n_epochs):
         # Generator gan (real/fake) loss
         err_gan = criterion_GAN(out_gan, real_label)
         # Generator style class loss
-        err_class = criterion_ACGAN(out_class.transpose(1,3), class_label)*lambda_A
+        err_class = criterion_ACGAN(out_class.transpose(1,3), class_label)*LAMBDA_A
         # Total Variation loss
         err_TV = criterion_TV(genfake)
         
@@ -240,16 +303,16 @@ for epoch in range(epoch,n_epochs):
             'content': real_content,
             'style_label': autoflag_OHE,
         })
-        err_ae = criterion_Rec(identity,real_content)*autoencoder_constrain
+        err_ae = criterion_Rec(identity,real_content)*AE_CONSTRAIN
         err_ae.backward()
         optimizer_G.step()
         
         # ---------------------------------------------------------------------------------
         
         # pring losses
-        if i % 1000 == 0:
+        if i % 500 == 0:
             print(
-                f"Epoch [{epoch}/{n_epochs}] Batch {i}/{len(dataloader)} \
+                f"Epoch [{epoch}/{NUM_EPOCHS}] Batch {i}/{len(dataloader)} \
                   Loss D: {errD:.4f}, Loss G: {errG_tot:.4f}, Loss AE: {err_ae:.4f} \
                   , Loss AC: {err_class:.4f} " 
             )
@@ -258,6 +321,8 @@ for epoch in range(epoch,n_epochs):
     lr_scheduler_G.step()
     lr_scheduler_D.step()
     
-    #Save model
+    print('>>> Saving gen and disc model States ')
     torch.save(generator.state_dict(), 'model-states/netG.pth')
     torch.save(discriminator.state_dict(), 'model-states/netD.pth')
+
+print('--------------------<< Training Completed >>----------------------------')
