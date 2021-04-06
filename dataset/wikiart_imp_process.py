@@ -4,7 +4,7 @@ from PIL import Image
 
 # ------------------------------------------------------------------------
 # path : where image to be processed
-path = '/home/mnpr_term/Documents/VersionControlled/Art-Generation-GANs/Dataset/WikiArt/symbolic-painting/'
+path = './WikiArt/abstract/'
 
 dirs = os.listdir( path )
 dir_length = len(dirs)
