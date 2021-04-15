@@ -153,10 +153,10 @@ tmux kill-session -t [2]
 **Install Dependencies**
 
 ```python
-# Pytorch
+# Pytorch (different for different versions )
 pip install torch torchvision
 # |OR|
-conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
+conda install pytorch torchvision torchaudio cudatoolkit=11.1 -c pytorch -c conda-forge
 
 # Matplotlib
 pip install matplotlib
