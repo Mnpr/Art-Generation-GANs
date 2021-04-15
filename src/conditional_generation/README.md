@@ -1,3 +1,3 @@
 ## Conditional GAN
 
-![](../../conditional)
+![](../../assets/cdcgan.png)
