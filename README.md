@@ -37,13 +37,13 @@ Objective : Series of progressive exploration and experimentation of Deep Genera
 
 ## :information_source: Instructions / Information
 
-- [System Setup]()
+- [System Setup](https://github.com/Mnpr/Art-Generation-GANs/blob/main/src/README.md)
 
-- [Extract, Transform, & Load]()
+- [ Dataset Instructions (Extract[ Download ], Transform, & Load)](https://github.com/Mnpr/Art-Generation-GANs/blob/main/dataset/README.md)
 
-- [Training and Logging]()
+- [Training and Logging](https://github.com/Mnpr/Art-Generation-GANs/blob/main/src/README.md)
 
-## :computer: Implementation:
+## :computer: Explored / Implemented Architectures
 
 - [x] [Unconditional Generation](https://github.com/Mnpr/Art-Generation-GANs/tree/main/src/unconditional_generation)
   
