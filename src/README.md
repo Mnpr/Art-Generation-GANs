@@ -1,29 +1,19 @@
 # Development/Reproduction Instructions
 
+*>>> : ETL instructions [[Here]]()*
+
 ### Contents
 
-1. Download
+1. Local Setup
 
-2. Image Processing
+2. Remote Setup
 
-3. Local Setup
+3. Dependencies
 
-4. Remote Setup
+4. Training and Logging
+ 
 
-5. Dependencies
-
-****
-
-## 1. Download
-
-[Original Source](https://www.wikiart.org/)
-- [Download Here @Kaggle :arrow_down:](https://www.kaggle.com/ipythonx/wikiart-gangogh-creating-art-gan/download)
-- *⚠️ | Large file [ 34.6 GB ]*
-
-
-## 2. Image Processing
-
-## 3. Local Setup
+## 1. Local Setup
 
 **Virtualenv-Python**
 
@@ -98,7 +88,7 @@ conda activate aipy
 conda deactivate
 ```
 
-## 4. Remote Setup
+## 2. Remote Setup
 
 **Login**
 
@@ -116,7 +106,6 @@ nvidia-smi
 
 ```shell
 scp -r <source> <destination>
-
 ```
 
 **Tmux** 
@@ -149,10 +138,9 @@ tmux a -t ganTorch
 # switch and/or kill sessions
 tmux switch -t [0]
 tmux kill-session -t [2]
-
 ```
 
-## 5. Dependencies
+## 3. Dependencies
 
 - NumPy : *Numerical( Vectorized ) computation*
 
@@ -185,5 +173,30 @@ pip install tensorboard
 # |OR|
 conda install -c conda-forge tensorboard
 ```
+
+## 4. Training and Logging Instructions
+
+
+### 4.1 Training
+
+For training and observing :
+
+- Training step is performed after [ Dataset Processing ]().
+
+- Navigate to the folder containing the implementation of specific network.
+
+- Change/Create Virtual environment with installed dependencies.
+
+- Change Hyper/Parameters if necessary.
+
+- Run `python train_script.py`
+
+### 4.2 Logging
+
+- Simple information about the states and successful execution of model is summarized as console output logs in `train_script.py`
+
+- Tensorboard Logging can be done ( In case the script contains Tensorboard observation elements ) by executing training script and running Tensorboard `tensorboard --logdir=./logs_folder/`
+
+- Navigate to `http://localhost:6006/` >> `Images`
 
 ****
