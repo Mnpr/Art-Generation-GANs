@@ -1,6 +1,6 @@
 # Development/Reproduction Instructions
 
-*>>> : ETL instructions [[Here]]()*
+*>>> : ETL instructions [[Here]](https://github.com/Mnpr/Art-Generation-GANs/blob/main/dataset/README.md)*
 
 ### Contents
 
@@ -181,7 +181,7 @@ conda install -c conda-forge tensorboard
 
 For training and observing :
 
-- Training step is performed after [ Dataset Processing ]().
+- Training step is performed after [ Dataset Processing ](https://github.com/Mnpr/Art-Generation-GANs/blob/main/dataset/README.md).
 
 - Navigate to the folder containing the implementation of specific network.
 
