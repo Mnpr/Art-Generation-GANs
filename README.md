@@ -94,6 +94,6 @@ Objective : Series of progressive exploration and experimentation of Deep Genera
 
 - [ 10 ] [ GitHub - colemiller94/gatedgan: PyTorch Implementation of Lua [https://github.com/xinyuanc91/Gated-GAN]](https://github.com/colemiller94/gatedgan)
 
-
+- [ 11 ] [ GitHub - HarisIqbal88/PlotNeuralNet: Latex code for making neural networks diagrams ](https://github.com/HarisIqbal88/PlotNeuralNet)
 
 ***
