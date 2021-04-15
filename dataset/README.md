@@ -94,6 +94,6 @@ dataset/
 
 
 
-For Next step >> [[  Train, Log and System Setup ]]()
+For Next step >> [[  Train, Log and System Setup ]](https://github.com/Mnpr/Art-Generation-GANs/blob/main/src/README.md)
 
 ****
