@@ -9,10 +9,10 @@ class Generator(nn.Module):
         self.gen = nn.Sequential(
             
             self._block(z_dim, hidden_dim),
-            self._block(hidden_dim, hidden_dim * 2),
-            self._block(hidden_dim * 2 , hidden_dim * 4),
-            self._block(hidden_dim * 4, hidden_dim * 8),
-            nn.Linear(hidden_dim * 8 , img_dim),
+            self._block(hidden_dim, hidden_dim * 4),
+            self._block(hidden_dim * 4 , hidden_dim * 8),
+            self._block(hidden_dim * 8, hidden_dim * 16),
+            nn.Linear(hidden_dim * 16 , img_dim),
             
             # normalize inputs to [-1, 1] so make outputs [-1, 1]
             nn.Tanh()
@@ -38,10 +38,10 @@ class Discriminator(nn.Module):
 
         self.disc = nn.Sequential(
 
-            self._block( img_dim, hidden_dim * 8  ),
-            self._block( hidden_dim*8 , hidden_dim * 4 ),
-            self._block( hidden_dim * 4 , hidden_dim * 2 ),
-            self._block( hidden_dim * 2, hidden_dim ),
+            self._block( img_dim, hidden_dim * 16  ),
+            self._block( hidden_dim*16 , hidden_dim * 8 ),
+            self._block( hidden_dim * 8 , hidden_dim * 4 ),
+            self._block( hidden_dim * 4, hidden_dim ),
 
             nn.Linear( hidden_dim, 1 ),
             nn.Sigmoid()
