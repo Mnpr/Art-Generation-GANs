@@ -1,0 +1,125 @@
+\documentclass[]{report} % Import report.cls
+% ----------------------------------------------------------------------------
+
+% Document Encodings
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% Graphics
+\usepackage{graphicx}
+\usepackage[section]{placeins}
+\graphicspath{{./Images/}}
+
+% Mathematic Symbols
+\usepackage{amsthm, amsmath, amssymb, amsfonts, bbm}
+
+%bibliography
+\usepackage[square,numbers]{natbib}
+\usepackage[nottoc]{tocbibind} % reference in table of contents
+\bibliographystyle{abbrvnat}
+
+\usepackage{caption, subcaption}
+
+% Miscellaneous
+\usepackage{setspace} % For using single or double spacing
+\usepackage{fancyhdr} % For the headers
+\usepackage{longtable} % Tables that can span several pages
+\usepackage{hyperref} % Adds clickable links at references
+
+
+% Hide chapter Numbers
+\usepackage{titlesec}
+\titleformat{\chapter}[display] {\Large\bfseries\centering} {} {1pt} {\huge }           % before-code
+
+% ----------------------------------------------------------------------------
+% Begin Document
+% ----------------------------------------------------------------------------
+\begin{document}
+
+\pagestyle{empty}
+\frontmatter % Use roman page numbering  ( i,ii, iii, ... )
+
+
+% Project Title
+% ............................................................................
+\begin{titlepage}
+	\begin{center}
+		\vfill
+		
+		%{\huge \scshape Kiel University of Applied Science }\\[0.5cm]
+		%\rule{\textwidth}{1pt}\\[3cm]
+		
+		% FH LOGO
+		% ---------------------------------
+		\FloatBarrier
+		\begin{figure}[h]
+			\includegraphics[width=\textwidth]{fh_kiel_logo.png}
+		\end{figure} 
+		\FloatBarrier
+		% ---------------------------------
+		\vspace*{2\baselineskip}
+		
+		{\large \textit{ Submitted as Master Projectwork for the partial fulfillment of M.S. in Information Engineering, IuE, University of Applied Science, Kiel }}\\[2cm]
+		
+		\center \Large{May 2021}\\[1.5cm]		
+		
+		\rule{\textwidth}{2.5pt}\\[0cm]
+		{\huge \bfseries {Exploration of Art Generation using Deep Generative Neural Networks } \par \ }\\[-0.5cm]
+		\rule{\textwidth}{2.5pt}\\[1cm]
+		
+		\vfill
+		
+		\hfill \large \underline{Submitted by}\\[0.5cm] \hfill
+		\hfill  {\large \textbf{Sudesh Acharya}}\\ [0.1cm]
+		\hfill  {\large{Mat. Nr. : 932253}}\\ [2cm]
+		
+		\hfill \large \underline{Under the Supervison of  }\\[0.5cm]
+		\hfill  {\large \textbf{Prof. Dr. Hauke Schramm}}\\ [0.1cm]
+
+	\end{center}
+\end{titlepage}
+
+% Blank page
+\shipout\null \stepcounter{page}
+
+% Preambles
+% ............................................................................
+\startpreamble
+
+
+\input{Preambles/abstract}
+\input{Preambles/acknowledgements}
+
+% Table of Contents
+% .................................... ........................................
+\unnumberedchapter{Contents}
+\tableofcontents % Write out the Table of Contents
+
+
+% Contents
+% ............................................................................
+\addtocontents{toc}{\vspace{2em}}
+\mainmatter % Begin numeric page numbering ( 1, 2, ... )
+
+\input{Contents/introduction}
+
+\numberedchapter
+\input{Contents/art_gen_domain}
+\input{Contents/architectures}
+\input{Contents/observations}
+
+\unnumberedchapter{Conclusion}
+\input{Contents/conclusion}
+
+% Bibliography
+% ............................................................................
+
+\unnumberedchapter{Bibliography}
+\bibliography{Preambles/bibliography} 
+
+\end{document}
+
+% ----------------------------------------------------------------------------
+% End of Document
+% ----------------------------------------------------------------------------
