@@ -11,8 +11,8 @@ from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 from torch.utils.tensorboard import SummaryWriter
 
-from model import Critic, Generator, weights_init
-from utils import gradient_penalty
+from utils import gradient_penalty, save_checkpoint, load_checkpoint
+from model import Critic, Generator, initialize_weights
 
 
 print('\n>>> Dependencies Loaded')
@@ -38,80 +38,62 @@ elif device == torch.device('cpu'):
 
 # Parameters
 # ----------------------------------------------------
-DATASET_PATH = '../../../dataset/wikiart/abstract/'
-SAMPLES_DIR = 'gen_samples_gp'
-STATS_DIR = 'statistics_gp'
+DATASET_PATH = '../../../../dataset/wikiart/abstract/'
+SAMPLES_DIR = 'gen_samples_gp_abstract'
+STATS_DIR = 'statistics_gp_abstract'
 
 DISPLAY_STEPS = 100 # Display/ Log  Steps
 
-IMG_DIM = 128 * 128 * 3 # 49152
-IMG_SHAPE = ( 3, 128, 128 )
-IMG_CHANNELS = IMG_SHAPE[0]
-
-# Hyper-parameters
-# ----------------------------------------------------
+# Hyperparameters etc.
 LEARNING_RATE = 1e-4
 BETA_ADAM = ( 0.0, 0.9 )
 
 BATCH_SIZE = 16
-NUM_EPOCHS = 10
+NUM_EPOCHS = 100
 
-Z_DIM = 100
-FEATURES_GEN = 64
+IMAGE_SIZE = 128
+CHANNELS_IMG = 3
+
 FEATURES_CRITIC = 64
+FEATURES_GEN = 64
+Z_DIM = 100
 
 CRITIC_ITERATIONS = 5
 LAMBDA_GP = 10
 
 print('>>> Parameters Defined ')
 
-
 # Image Transformations [ Resize, Convert2Tensor, and Normalzie ]
 #-------------------------------------------------------------------
-transform = transforms.Compose(
+transforms = transforms.Compose(
     [
-        transforms.Resize( IMG_SHAPE[1] ),
+        transforms.Resize(IMAGE_SIZE),
         transforms.ToTensor(),
         transforms.Normalize(
-            [0.5 for _ in range(IMG_CHANNELS)], [0.5 for _ in range(IMG_CHANNELS)]),
+            [0.5 for _ in range(CHANNELS_IMG)], [0.5 for _ in range(CHANNELS_IMG)]),
     ]
 )
 
-
-# Dataset and Loader
-# ----------------------------------------------------
-"""[ for MNIST Dataset ]
-
-- Change Image Shape and Dimension ( 1 x 28 x 28 )
-- uncomment the following dataset.MNIST line and comment custom dataset
-"""
-
-# dataset = datasets.MNIST(
-#     root="dataset/"
-#     , train=True
-#     , transform=transforms
-#     , download=True )
-
-
-dataset = datasets.ImageFolder( root=DATASET_PATH, transform=transform )
-data_loader = DataLoader( dataset, batch_size=BATCH_SIZE, shuffle=True )
-print('\n>>> Data Loader with Transformation is Ready')
-
-
+# dataset = datasets.MNIST(root="data/", transform=transforms, download=True)
+dataset = datasets.ImageFolder(root=DATASET_PATH, transform=transforms)
+data_loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
 
 # Initialize Generator and Critic
-gen = Generator( Z_DIM, IMG_CHANNELS, FEATURES_GEN ).to(device)
-critic = Critic( IMG_CHANNELS, FEATURES_CRITIC ).to(device)
+gen = Generator(Z_DIM, CHANNELS_IMG, FEATURES_GEN).to(device)
+critic = Critic(CHANNELS_IMG, FEATURES_CRITIC).to(device)
+
+initialize_weights(gen)
+initialize_weights(critic)
+
+print('\n>>> Network weights initialized ')
 
 
 # initializate optimizer
 opt_gen = optim.Adam( gen.parameters(), lr=LEARNING_RATE, betas=BETA_ADAM )
 opt_critic = optim.Adam( critic.parameters(), lr=LEARNING_RATE, betas=BETA_ADAM )
 
-# Initialize weights
-gen = gen.apply(weights_init)
-critic = critic.apply(weights_init)
-print('\n>>> Network weights initialized ')
+
+print('\n>>> Optimizers initialized ')
 
 arch_info = f"""
 -------------------------------------------------------------------
@@ -139,28 +121,30 @@ critic_losses = []
 # ----------------------------------------------------
 fixed_noise = torch.randn(( BATCH_SIZE, Z_DIM, 1, 1 )).to(device)
 
-writer_real = SummaryWriter(f"logs_gp/real")
-writer_fake = SummaryWriter(f"logs_gp/fake")
+writer_real = SummaryWriter(f"logs_gp_abstract/real")
+writer_fake = SummaryWriter(f"logs_gp_abstract/fake")
 
 step = 0
+
+gen.train()
+critic.train()
 
 # ----------------------------------------------------
 # Training
 # ----------------------------------------------------
 for epoch in range(NUM_EPOCHS):
 
-    # Target labels _ : Unsupervised Learning
     for batch_idx, (real, _) in enumerate(data_loader):
 
         real = real.to(device)
+        cur_batch_size = real.shape[0]
 
         # Train Critic: max E[critic(real)] - E[critic(fake)]
         for _ in range(CRITIC_ITERATIONS):
 
-            noise = torch.randn( BATCH_SIZE, Z_DIM, 1, 1 ).to(device)
+            noise = torch.randn(cur_batch_size, Z_DIM, 1, 1).to(device)
             fake = gen(noise)
 
-            # critic losses
             critic_real = critic(real).reshape(-1)
             critic_fake = critic(fake).reshape(-1)
 
@@ -168,33 +152,28 @@ for epoch in range(NUM_EPOCHS):
             gp = gradient_penalty(critic, real, fake, device=device)
 
             # maximize = -(to minimize : since optimizer minimizes cost)
-            critic_loss = (
+            loss_critic = (
                 -(torch.mean(critic_real) - torch.mean(critic_fake)) + LAMBDA_GP * gp
             )
 
             # Keep track of critic losses
-            critic_losses += [critic_loss.item()]
+            critic_losses += [loss_critic.item()]
 
-            # Reset gradient
             critic.zero_grad()
-
-            # Backwards propagation
-            critic_loss.backward(retain_graph=True)
+            loss_critic.backward(retain_graph=True)
             opt_critic.step()
 
         # Train Generator: max E[critic(gen_fake)] <-> min -E[critic(gen_fake)]
         gen_fake = critic(fake).reshape(-1)
 
-        gen_loss = -torch.mean(gen_fake)
-        
+        loss_gen = -torch.mean(gen_fake)
+
         # keep track of generator loss
-        generator_losses += [gen_loss.item()]
+        generator_losses += [loss_gen.item()]
 
-        # reset gradient
+
         gen.zero_grad()
-
-        # backwards propagation
-        gen_loss.backward()
+        loss_gen.backward()
         opt_gen.step()
 
         # Logging, saving loss function and Images
@@ -206,7 +185,7 @@ for epoch in range(NUM_EPOCHS):
             print(
                 f"Steps: {step}, Epoch: [{epoch}/{NUM_EPOCHS}] Batch: {batch_idx}/{len( data_loader )} \
                   Loss D: {critic_mean:.4f}, loss G: {gen_mean:.4f}"
-            )  
+            ) 
 
             # Save Loss function Plot
             # -------------------------------------------------------------------

@@ -24,3 +24,13 @@ def gradient_penalty(critic, real, fake, device="cpu"):
     gradient_penalty = torch.mean((gradient_norm - 1) ** 2)
     return gradient_penalty
 
+
+def save_checkpoint(state, filename="wgan_gp.pth.tar"):
+    print("=> Saving checkpoint")
+    torch.save(state, filename)
+
+
+def load_checkpoint(checkpoint, gen, disc):
+    print("=> Loading checkpoint")
+    gen.load_state_dict(checkpoint['gen'])
+    disc.load_state_dict(checkpoint['disc'])

@@ -37,9 +37,9 @@ elif device == torch.device('cpu'):
 
 # Parameters
 # ----------------------------------------------------
-DATASET_PATH = '../../../dataset/wikiart/abstract/'
-SAMPLES_DIR = 'gen_samples_wc'
-STATS_DIR = 'statistics_wc'
+DATASET_PATH = '../../../../dataset/wikiart/abstract/'
+SAMPLES_DIR = 'gen_samples_wc_abstract'
+STATS_DIR = 'statistics_wc_abstract'
 
 DISPLAY_STEPS = 100 # Display/ Log  Steps
 
@@ -53,7 +53,7 @@ LEARNING_RATE = 5e-4
 # BETA_ADAM = ( 0.5, 0.999 )
 
 BATCH_SIZE = 16
-NUM_EPOCHS = 10
+NUM_EPOCHS = 100
 
 Z_DIM = 100
 FEATURES_GEN = 64
@@ -141,8 +141,8 @@ critic_losses = []
 # ----------------------------------------------------
 fixed_noise = torch.randn(( BATCH_SIZE, Z_DIM, 1, 1 )).to(device)
 
-writer_fake = SummaryWriter(f"logs_wc/fake")
-writer_real = SummaryWriter(f"logs_wc/real")
+writer_fake = SummaryWriter(f"logs_wc_abstract/fake")
+writer_real = SummaryWriter(f"logs_wc_abstract/real")
 
 step = 0
 
