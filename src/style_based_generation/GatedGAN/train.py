@@ -50,7 +50,7 @@ elif device == torch.device('cpu'):
 # Train Parameters [Gated-GAN]
 # ---------------------------------------------------------------------------------
 
-DATASET_PATH = '../../../dataset//photo2fourcollection/'
+DATASET_PATH = '../../../dataset/photo2fourcollection/'
 
 NUM_EPOCHS = 100
 DECAY_EPOCHS=50
@@ -322,7 +322,7 @@ for epoch in range(epoch,NUM_EPOCHS):
     lr_scheduler_D.step()
     
     print('>>> Saving gen and disc model States ')
-    torch.save(generator.state_dict(), 'model-states/netG.pth')
-    torch.save(discriminator.state_dict(), 'model-states/netD.pth')
+    torch.save(generator.state_dict(), 'netG.pth')
+    torch.save(discriminator.state_dict(), 'netD.pth')
 
 print('--------------------<< Training Completed >>----------------------------')
