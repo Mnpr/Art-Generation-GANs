@@ -1,0 +1,71 @@
+\documentclass[border=15pt, multi, tikz]{standalone}
+
+\usepackage{import}
+\subimport{../../layers/}{init}
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{3d}
+
+\def\FcColor{rgb:brown,5;yellow,2.5;black,5}
+\def\FcReluColor{rgb:orange,5;red,5;white,5}
+
+\def\SigmoidColor{rgb:magenta,5;black,7}
+
+\begin{document}
+\begin{tikzpicture}
+
+\tikzstyle{connection}=[ultra thick,every node/.style={sloped,allow upside down},draw=\edgecolor,opacity=0.5]
+
+\node[canvas is zy plane at x=0] (temp) at (-0.2,0,0) {\includegraphics[width=8cm,height=8cm]{art.jpg}};
+
+% RGB Image
+\pic[shift={(0,0,0)}] at (0,0,0) {Box={name=img,caption=Image input,%
+        xlabel={{"3","dummy"}}, ylabel=128, zlabel=128,fill=\FcColor,%
+        height=40,width={2},depth=40}};
+        
+% Fully-Connected Layer II
+\pic[shift={(4.5,0,0)}] at (img-east) {RightBandedBox={name=fc0,caption=FC-0 flattened,%
+        xlabel={{"1",""}},zlabel=49152,fill=\FcColor,bandfill=\FcReluColor,%
+        height=3,width=3,depth=100}};
+
+% Fully-Connected Layer II
+\pic[shift={(2,0,0)}] at (fc0-east) {RightBandedBox={name=fc1,caption=FC-I + ReLU,%
+        xlabel={{"1",""}},zlabel=1600,fill=\FcColor,bandfill=\FcReluColor,%
+        height=3,width=3,depth=80}};
+        
+% Fully-Connected Layer III
+\pic[shift={(2,0,0)}] at (fc1-east) {RightBandedBox={name=fc2,caption=FC-II + ReLU,%
+        xlabel={{"1","dummy"}},zlabel=800,fill=\FcColor,bandfill=\FcReluColor,%
+        height=3,width=3,depth=60}};
+
+% Fully-Connected Layer IV
+\pic[shift={(2,0,0)}] at (fc2-east) {RightBandedBox={name=fc3,caption=FC-III + ReLU,%
+        xlabel={{"1","dummy"}},zlabel=400,fill=\FcColor,bandfill=\FcReluColor,%
+        height=3,width=3,depth=30}};
+        
+% Fully-Connected Layer V
+\pic[shift={(2,0,0)}] at (fc3-east) {RightBandedBox={name=fc4,caption=FC-IV + ReLU,%
+        xlabel={{"1","dummy"}},zlabel=100,fill=\FcColor,bandfill=\FcReluColor,%
+        height=3,width=3,depth=15}};
+        
+
+%%%%%%%%%%
+% sigmoid
+\pic[shift={(2,0,0)}] at (fc4-east) {Box={name=sigmoid,caption=Sigmoid,%
+        fill=\SigmoidColor,%
+        height=2,width={2},depth=2}};
+
+    
+%% Draw Arrow Connections
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\draw [connection]  (img-east)        -- node {\midarrow} (fc0-west);
+\draw [connection]  (fc0-east)       -- node {\midarrow} (fc1-west);
+\draw [connection]  (fc1-east)       -- node {\midarrow} (fc2-west);
+\draw [connection]  (fc2-east)       -- node {\midarrow} (fc3-west);
+\draw [connection]  (fc3-east)       -- node {\midarrow} (fc4-west);
+\draw [connection]  (fc4-east)       -- node {\midarrow} (sigmoid-west);
+
+
+
+\end{tikzpicture}
+\end{document}

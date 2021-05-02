@@ -1,0 +1,96 @@
+\documentclass[border=15pt, multi, tikz]{standalone}
+
+%\usepackage{blocks}
+
+% Import from Layers
+\usepackage{import}
+\usepackage{xcolor}
+\subimport{../../layers/}{init}
+
+\usetikzlibrary{positioning}
+
+
+% Theme / Color Configuration
+% ---------------------------------------------------------------------------------------
+\def\ConvColor{rgb:brown,5;yellow,2.5;black,5}
+\def\ConvReluColor{rgb:orange,5;red,5;white,5}
+\def\PoolColor{rgb:red,1;black,5.3}
+\def\FcColor{rgb:blue,5;red,2.5;white,5}
+
+
+% Architecture Begining
+% ---------------------------------------------------------------------------------------
+
+\begin{document}
+\begin{tikzpicture}
+
+\tikzstyle{connection} = [ultra thick, every node/.style = { sloped, allow upside down } %
+						, draw=\edgecolor %
+						, opacity=0.5 ];
+
+%% Draw Layer Blocks
+% ---------------------------------------------------------------------------------------
+
+% conv1_1,conv1_2
+% --------------------------------------------
+\pic[shift={(0,0,0)}] at (0,0,0) % 
+	{ RightBandedBox = { %
+		 name=cr1, caption=conv\_block1(CRCRP), xlabel={{"64","64"}} , ylabel=224, zlabel=224
+		, fill=\ConvColor, bandfill=\ConvReluColor, height=40,width={2,2},depth=40 } %
+    };
+        
+%pool1
+% --------------------------------------------
+\pic[shift={(0.1,0,0)}] at (cr1-east) {Box={name=p1,%
+        fill=\PoolColor,opacity=0.7,height=35,width=2,depth=35}};
+        
+
+% conv2_1,conv2_2
+% --------------------------------------------
+\pic[shift={(3,0,0)}] at (p1-east) {RightBandedBox={name=cr2,caption=conv\_block2(CRCRP),%
+        xlabel={{"128","128"}}, zlabel=112,fill=\ConvColor,bandfill=\ConvReluColor,%
+        height=35,width={4,4},depth=35}};
+%pool2
+\pic[shift={(0.1,0,0)}] at (cr2-east) {Box={name=p2,%
+        fill=\PoolColor,opacity=0.7,height=30,width=2,depth=30}};
+
+% conv3_1,conv3_2
+% --------------------------------------------
+\pic[shift={(2.8,0,0)}] at (p2-east) {RightBandedBox={name=cr3,caption=conv\_block3(CRCRCRCRP),%
+        xlabel={{"256","256","256", "256"}},zlabel=56,fill=\ConvColor,bandfill=\ConvReluColor,%
+        height=30,width={6,6,6,6},depth=30}};
+%pool3
+% --------------------------------------------
+\pic[shift={(0.1,0,0)}] at (cr3-east) {Box={name=p3,%
+        fill=\PoolColor,opacity=0.7,height=23,width=2,depth=23}};
+
+% conv4_1,conv4_2,conv4_3
+% --------------------------------------------
+\pic[shift={(2,0,0)}] at (p3-east) {RightBandedBox={name=cr4,caption=conv\_block4(CRCRCRCRP),%
+        xlabel={{"512","512","512","512"}},zlabel=28,fill=\ConvColor,bandfill=\ConvReluColor,%
+        height=23,width={8,8,8,8},depth=23}};
+%pool4
+\pic[shift={(0.1,0,0)}] at (cr4-east) {Box={name=p4,%
+        fill=\PoolColor,opacity=0.7,height=15,width=2,depth=15}};
+
+% conv5_1,conv5_2,conv5_3
+% --------------------------------------------
+\pic[shift={(2,0,0)}] at (p4-east) {Box={name=cr5,caption=conv\_layer,%
+        xlabel={{"512", ""}}, zlabel=14,fill=\ConvColor,opacity=0.5,%
+        height=15,width=8,depth=15}};
+
+
+%% Draw Arrow Connections
+%--------------------------------------------------------------------------------------
+\draw [connection]  (p1-east)        -- node {\midarrow} (cr2-west);
+\draw [connection]  (p2-east)        -- node {\midarrow} (cr3-west);
+\draw [connection]  (p3-east)        -- node {\midarrow} (cr4-west);
+\draw [connection]  (p4-east)        -- node {\midarrow} (cr5-west);
+%\draw [connection]  (p5-east)        -- node {\midarrow} (fc6-west);
+%\draw [connection]  (fc6-east)       -- node {\midarrow} (fc7-west);
+%draw [connection]  (fc7-east)       -- node {\midarrow} (fc8-west);
+%\draw [connection]  (softmax-east)   -- node {\midarrow} ++(1.5,0,0);
+%--------------------------------------------------------------------------------------
+
+\end{tikzpicture}
+\end{document}
