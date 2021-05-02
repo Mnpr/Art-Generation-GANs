@@ -7,9 +7,10 @@ class Discriminator(nn.Module):
         super(Discriminator, self).__init__()
         
         self.disc = nn.Sequential(
-            self. _block(im_chan, hidden_dim),
-            self. _block(hidden_dim, hidden_dim * 2),
-            self. _block(hidden_dim * 2, 1, final_layer=True),
+            self._block(im_chan, hidden_dim),
+            self._block(hidden_dim, hidden_dim * 2),
+            self._block(hidden_dim*2, hidden_dim * 4),
+            self._block(hidden_dim * 4, 1, final_layer=True),
         )
 
     def  _block(self, input_channels, output_channels, kernel_size=4, stride=2, final_layer=False):

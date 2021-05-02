@@ -13,7 +13,7 @@ import torchvision.transforms as transforms
 
 from torch.utils.tensorboard import SummaryWriter
 
-from model import Generator, Discriminator, weights_init
+from c_dcgan_model import Generator, Discriminator, weights_init
 from art_dataset import ArtDataset
 from utils import *
 
@@ -40,7 +40,7 @@ elif device == torch.device('cpu'):
 
 # Parameters
 # ----------------------------------------------------
-DATASET_PATH = '../../../dataset/wikiart/abstract/'
+DATASET_PATH = '../../dataset/wikiart_conditional/'
 SAMPLES_DIR = 'gen_samples'
 STATS_DIR = 'statistics'
 
@@ -52,11 +52,11 @@ NUM_CLASSES = 4
 
 # Hyper-parameters
 # ----------------------------------------------------
-LEARNING_RATE = 2e-4
+LEARNING_RATE = 1e-4
 BETA_ADAM = ( 0.5, 0.999 )
 
 BATCH_SIZE = 16
-NUM_EPOCHS = 10
+NUM_EPOCHS = 100
 
 Z_DIM = 100
 FEATURES_GEN = 64
